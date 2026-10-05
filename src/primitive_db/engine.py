@@ -100,8 +100,12 @@ def run():
             case "help":
                 print_help()
             case "list_tables":
-                for table_name in list_tables(metadata):
-                    print(f"- {table_name}")
+                tables = list_tables(metadata)
+                if not tables:
+                    print("Таблиц нет.")
+                else:
+                    for table_name in tables:
+                        print(f"- {table_name}")
             case "create_table":
                 table_name = args[1]
                 columns = args[2:]

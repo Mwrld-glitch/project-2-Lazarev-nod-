@@ -58,7 +58,9 @@ def insert(metadata, table_name, values):
     expected = len(schema) - 1
 
     if len(values) != expected:
-        raise ValueError(values)
+        raise ValueError(
+            f"ожидалось {expected} значений, получено {len(values)}"
+        )
 
     record = {}
     for i, column in enumerate(schema[1:], start=0):
