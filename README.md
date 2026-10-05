@@ -4,9 +4,15 @@
 
 ## Установка
 
+Собрать пакет:
+
+uv build
+
+Установить:
+
 uv tool install dist/*.whl
 
-После установки команда database запускает базу данных.
+После установки команда `database` запускает базу данных.
 
 ## Управление таблицами
 
@@ -26,25 +32,27 @@ int, str, bool
 
 ### Пример использования
 
->>>Введите команду: create_table users name:str age:int is_active:bool
-Таблица "users" успешно создана со столбцами: ID:int, name:str, age:int, is_active:bool
+Введите команду: create_table users name:str age:int is_active:bool
+>>> Таблица "users" успешно создана со столбцами: ID:int, name:str, age:int, is_active:bool
 
->>>Введите команду: list_tables
-- users
+Введите команду: list_tables
+>>> - users
 
->>>Введите команду: drop_table users
-Таблица "users" успешно удалена.
+ведите команду: drop_table users
+>>>> Таблица "users" успешно удалена.
 
->>>Введите команду: exit
+Введите команду: exit
 
->>>Введите команду: help
-***Процесс работы с таблицей***
-Функции:
-<command> create_table <имя_таблицы> <столбец1:тип> <столбец2:тип> .. - создать таблицу
-<command> list_tables - показать список всех таблиц
-<command> drop_table <имя_таблицы> - удалить таблицу
-<command> exit - выход из программы
-<command> help - справочная информация 
+Введите команду: help
+
+>>>> ***Процесс работы с таблицей***
+>>>> 
+>>>> Функции:
+>>>> <command> create_table <имя_таблицы> <столбец1:тип> <столбец2:тип> .. - создать таблицу
+>>>> <command> list_tables - показать список всех таблиц
+>>>> <command> drop_table <имя_таблицы> - удалить таблицу
+>>>> <command> exit - выход из программы
+>>>> <command> help - справочная информация 
 
 
 ## Демо этап 2 asciinema
@@ -65,29 +73,25 @@ https://asciinema.org/a/KmFAXYk6z8vlczSS
 
 ### Пример использования
 
->>> Введите команду: create_table users name:str age:int is_active:bool
-Таблица "users" успешно создана со столбцами: ID:int, name:str, age:int, is_active:bool
+Введите команду: create_table users name:str age:int is_active:bool
+>>>> Таблица "users" успешно создана со столбцами: ID:int, name:str, age:int, is_active:bool
 
->>> Введите команду: insert into users values ("Sergei", 28, true)
-Запись с ID=1 успешно добавлена в таблицу "users".
+Введите команду: insert into users values ("Sergei", 28, true)
+>>>> Запись с ID=1 успешно добавлена в таблицу "users".
 
->>> Введите команду: select from users where age = 28
-+----+--------+-----+-----------+
-| ID |  name  | age | is_active |
-+----+--------+-----+-----------+
-| 1  | Sergei | 28  |    True   |
-+----+--------+-----+-----------+
+Введите команду: select from users where age = 28
+>>>> Визуально формленный вывод таблицы.
 
->>> Введите команду: update users set age = 29 where name = "Sergei"
-Запись с ID=1 в таблице "users" успешно обновлена.
+Введите команду: update users set age = 29 where name = "Sergei"
+>>>> Запись с ID=1 в таблице "users" успешно обновлена.
 
->>> Введите команду: delete from users where ID = 1
-Запись с ID=1 успешно удалена из таблицы "users".
+Введите команду: delete from users where ID = 1
+>>>> Запись с ID=1 успешно удалена из таблицы "users".
 
->>> Введите команду: info users
-Таблица: users
-Столбцы: ID:int, name:str, age:int, is_active:bool
-Количество записей: 0
+ведите команду: info users
+>>>> Таблица: users
+>>>> Столбцы: ID:int, name:str, age:int, is_active:bool
+>>>> Количество записей: 0
 
 ## Демо этап 3 asciinema
 
@@ -104,10 +108,10 @@ https://asciinema.org/a/cOBDFU1MIWzgGmj0
 - `Произошла непредвиденная ошибка: <текст>`
 
 Опасные операции (`drop_table`, `delete`) запрашивают подтверждение:
-Вы уверены, что хотите выполнить "удаление таблицы"? [y/n]:
+>>>> Вы уверены, что хотите выполнить "удаление таблицы"? [y/n]:
 
 Операции с файлами (`insert`, `select`) выводят время выполнения:
-Функция insert выполнилась за 0.000 секунд.
+>>>> Функция insert выполнилась за 0.000 секунд.
 
 ## Демо этап 4 asciinema
 
