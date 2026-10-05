@@ -1,17 +1,18 @@
+from primitive_db.constants import VALID_TYPES
 from primitive_db.decorators import confirm_action, handle_db_errors, log_time
 from primitive_db.utils import load_table_data
 
 
 @handle_db_errors
 def create_table(metadata, table_name, columns):
+    """Создаёт новую таблицу с указанными столбцами."""
     if table_name in metadata:
         raise ValueError(f'Таблица "{table_name}" уже существует.')
 
-    allowed_types = ("int", "str", "bool")
     for col in columns:
         name, col_type = col.split(":", 1)
-        if col_type not in allowed_types:
-            raise ValueError(f"{col}")
+        if col_type not in VALID_TYPES:
+            raise ValueError(col)
 
     table_schema = [{"name": "ID", "type": "int"}]
     for col in columns:
@@ -28,6 +29,7 @@ def create_table(metadata, table_name, columns):
 @handle_db_errors
 @confirm_action("удаление таблицы")
 def drop_table(metadata, table_name):
+    """Удаляет таблицу."""
     del metadata[table_name]
     print(f'Таблица "{table_name}" успешно удалена.')
     return metadata
@@ -35,6 +37,7 @@ def drop_table(metadata, table_name):
 
 @handle_db_errors
 def _convert_value(value, col_type):
+    """Преобразует строку в значение нужного типа."""
     if col_type == "int":
         return int(value)
     if col_type == "bool":
@@ -51,6 +54,7 @@ def _convert_value(value, col_type):
 @handle_db_errors
 @log_time
 def insert(metadata, table_name, values):
+    """Добавляет новую запись в таблицу."""
     schema = metadata[table_name]
     expected = len(schema) - 1
 
@@ -77,6 +81,7 @@ def insert(metadata, table_name, values):
 @handle_db_errors
 @log_time
 def select(table_data, where_clause=None):
+    """Возвращает записи таблицы — все или по условию."""
     if where_clause is None:
         return table_data
     result = []
@@ -88,6 +93,7 @@ def select(table_data, where_clause=None):
 
 @handle_db_errors
 def update(table_data, set_clause, where_clause):
+    """Обновляет записи таблицы по условию."""
     updated_ids = []
     for record in table_data:
         if all(record.get(k) == v for k, v in where_clause.items()):
@@ -100,6 +106,7 @@ def update(table_data, set_clause, where_clause):
 @handle_db_errors
 @confirm_action("удаление записи")
 def delete(table_data, where_clause):
+    """Удаляет записи таблицы по условию."""
     deleted_ids = []
     kept = []
     for record in table_data:
@@ -109,11 +116,14 @@ def delete(table_data, where_clause):
             kept.append(record)
     return kept, deleted_ids
 
+
 @handle_db_errors
 def list_tables(metadata):
+    """Возвращает список всех таблиц."""
     return list(metadata.keys())
 
 
 @handle_db_errors
 def info(metadata, table_name):
+    """Возвращает информацию о таблице."""
     return metadata[table_name]

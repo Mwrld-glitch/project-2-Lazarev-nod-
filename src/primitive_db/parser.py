@@ -1,5 +1,5 @@
 def parse_where(tokens):
-    """Превращает список вида ['age', '=', '28'] в словарь {'age': 28}."""
+    """Разбирает условие WHERE. Возвращает словарь или None при ошибке."""
     if len(tokens) != 3 or tokens[1] != "=":
         return None
     key = tokens[0]
@@ -8,7 +8,7 @@ def parse_where(tokens):
 
 
 def parse_set(tokens):
-    """Превращает список вида ['age', '=', '29'] в словарь {'age': 29}."""
+    """Разбирает условие SET. Возвращает словарь или None при ошибке."""
     if len(tokens) != 3 or tokens[1] != "=":
         return None
     key = tokens[0]

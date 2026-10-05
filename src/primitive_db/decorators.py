@@ -25,7 +25,7 @@ def handle_db_errors(func):
 
 
 def confirm_action(action_name):
-    """Фабрика декораторов: спрашивает подтверждение перед действием."""
+    """Спрашивает подтверждение перед действием."""
 
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -56,7 +56,7 @@ def log_time(func):
 
 
 def create_cacher():
-    """Возвращает функцию-кэшер. Кэш хранится в замыкании."""
+    """Возвращает результат из памяти или получает его заново."""
     cache = {}
 
     def cache_result(key, value_func):

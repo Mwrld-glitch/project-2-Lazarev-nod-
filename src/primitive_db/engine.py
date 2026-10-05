@@ -3,6 +3,7 @@ import shlex
 import prompt
 from prettytable import PrettyTable
 
+from primitive_db.constants import META_FILE
 from primitive_db.core import (
     create_table,
     delete,
@@ -21,8 +22,6 @@ from primitive_db.utils import (
     save_metadata,
     save_table_data,
 )
-
-DB_FILE = "db_meta.json"
 
 
 def print_help():
@@ -70,7 +69,7 @@ def run():
     cacher = create_cacher()
 
     while True:
-        metadata = load_metadata(DB_FILE)
+        metadata = load_metadata(META_FILE)
         if metadata is None:
             metadata = {}
 
@@ -108,12 +107,12 @@ def run():
                 columns = args[2:]
                 result = create_table(metadata, table_name, columns)
                 if result is not None:
-                    save_metadata(DB_FILE, result)
+                    save_metadata(META_FILE, result)
             case "drop_table":
                 table_name = args[1]
                 result = drop_table(metadata, table_name)
                 if result is not None:
-                    save_metadata(DB_FILE, result)
+                    save_metadata(META_FILE, result)
             case "insert":
                 table_name = args[2]
                 values_str = " ".join(args[4:]).strip("()")
