@@ -45,3 +45,8 @@ int, str, bool
 <command> drop_table <имя_таблицы> - удалить таблицу
 <command> exit - выход из программы
 <command> help - справочная информация 
+
+
+## Демо
+
+https://asciinema.org/a/KmFAXYk6z8vlczSS
