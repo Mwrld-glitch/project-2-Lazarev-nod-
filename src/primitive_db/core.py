@@ -35,7 +35,6 @@ def drop_table(metadata, table_name):
     return metadata
 
 
-@handle_db_errors
 def _convert_value(value, col_type):
     """Преобразует строку в значение нужного типа."""
     if col_type == "int":
@@ -65,7 +64,10 @@ def insert(metadata, table_name, values):
     for i, column in enumerate(schema[1:], start=0):
         col_name = column["name"]
         col_type = column["type"]
-        record[col_name] = _convert_value(values[i], col_type)
+        converted = _convert_value(values[i], col_type)
+        if converted is None:
+            raise ValueError(values[i])
+        record[col_name] = converted
 
     data = load_table_data(table_name)
     if data is None:
@@ -76,7 +78,6 @@ def insert(metadata, table_name, values):
 
     print(f'Запись с ID={new_id} успешно добавлена в таблицу "{table_name}".')
     return data
-
 
 @handle_db_errors
 @log_time
@@ -100,6 +101,8 @@ def update(table_data, set_clause, where_clause):
             for k, v in set_clause.items():
                 record[k] = v
             updated_ids.append(record["ID"])
+    if not updated_ids:
+        raise ValueError("нет записей для обновления")
     return table_data, updated_ids
 
 
@@ -114,6 +117,8 @@ def delete(table_data, where_clause):
             deleted_ids.append(record["ID"])
         else:
             kept.append(record)
+    if not deleted_ids:
+        raise ValueError("нет записей для удаления")
     return kept, deleted_ids
 
 

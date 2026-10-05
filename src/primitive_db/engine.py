@@ -113,6 +113,7 @@ def run():
                 result = drop_table(metadata, table_name)
                 if result is not None:
                     save_metadata(META_FILE, result)
+                cacher = create_cacher()
             case "insert":
                 table_name = args[2]
                 values_str = " ".join(args[4:]).strip("()")
@@ -123,6 +124,7 @@ def run():
                 data = insert(metadata, table_name, values)
                 if data is not None:
                     save_table_data(table_name, data)
+                cacher = create_cacher()
             case "select":
                 table_name = args[2]
                 data = cacher(
@@ -158,6 +160,7 @@ def run():
                         f'Запись с ID={record_id} в таблице "{table_name}" '
                         "успешно обновлена."
                     )
+                cacher = create_cacher()
             case "delete":
                 table_name = args[2]
                 where_index = args.index("where")
@@ -175,6 +178,7 @@ def run():
                         f'Запись с ID={record_id} успешно удалена '
                         f'из таблицы "{table_name}".'
                     )
+                cacher = create_cacher()
             case "info":
                 table_name = args[1]
                 schema = info(metadata, table_name)
