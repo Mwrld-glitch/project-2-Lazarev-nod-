@@ -1,3 +1,4 @@
+import os
 import shlex
 
 import prompt
@@ -117,6 +118,9 @@ def run():
                 result = drop_table(metadata, table_name)
                 if result is not None:
                     save_metadata(META_FILE, result)
+                    data_file = f"data/{table_name}.json"
+                    if os.path.exists(data_file):
+                        os.remove(data_file)
                 cacher = create_cacher()
             case "insert":
                 table_name = args[2]
